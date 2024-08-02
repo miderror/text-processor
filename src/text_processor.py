@@ -1,9 +1,10 @@
-from PySide6.QtGui import QAction
-from PySide6.QtWidgets import QMainWindow, QStackedWidget
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabWidget
 
 from commands import *
 from src.editor_widget import EditorWidget
 from src.start_window import StartWindow
+from tab_widgets import FileTab, MainTab, InsertTab
 
 
 class TextProcessor(QMainWindow):
@@ -22,6 +23,7 @@ class TextProcessor(QMainWindow):
 
         self.adjust_size_for_start_window()
         self.setWindowTitle('Text Processor')
+        self.setWindowIcon(QIcon('../resources/logo.png'))
 
     def create_new_file(self):
         self.stacked_widget.setCurrentWidget(self.editor_widget)
@@ -37,20 +39,17 @@ class TextProcessor(QMainWindow):
 
     def adjust_size_for_editor(self):
         self.setGeometry(100, 100, 800, 600)
-        self.init_menubar()
+        self.init_tabs()
 
-    def init_menubar(self):
-        menubar = self.menuBar()
+    def init_tabs(self):
+        self.tab_widget = QTabWidget(self)
+        self.tab_widget.setMaximumHeight(100)
+        self.editor_widget.layout.addWidget(self.tab_widget, 0, 0, 1, 3)
 
-        file_menu = menubar.addMenu('File')
-        new_action = QAction('New', self)
-        new_action.triggered.connect(lambda: NewFileCommand(self.editor_widget).execute())
-        file_menu.addAction(new_action)
+        file_tab = FileTab(self.editor_widget)
+        main_tab = MainTab(self.editor_widget)
+        insert_tab = InsertTab(self.editor_widget)
 
-        open_action = QAction('Open', self)
-        open_action.triggered.connect(lambda: OpenFileCommand(self.editor_widget).execute())
-        file_menu.addAction(open_action)
-
-        save_action = QAction('Save', self)
-        save_action.triggered.connect(lambda: SaveFileCommand(self.editor_widget).execute())
-        file_menu.addAction(save_action)
+        self.tab_widget.addTab(file_tab, "File")
+        self.tab_widget.addTab(main_tab, "Home")
+        self.tab_widget.addTab(insert_tab, "Insert")

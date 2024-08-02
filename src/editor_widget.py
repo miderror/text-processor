@@ -1,7 +1,23 @@
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QTextEdit, QLabel, QWidget
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QDesktopServices
+from PySide6.QtWidgets import QTextEdit, QWidget, QApplication
+
 from src.file_manager import FileManager
 from src.navigation_widget import NavigationWidget
+
+
+class CustomTextEdit(QTextEdit):
+    def __init__(self):
+        super().__init__()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton and QApplication.keyboardModifiers() == Qt.ControlModifier:
+            anchor = self.anchorAt(event.pos())
+            if anchor:
+                QDesktopServices.openUrl(QUrl(anchor))
+                return
+        super().mousePressEvent(event)
 
 
 class EditorWidget(QWidget):
@@ -9,11 +25,10 @@ class EditorWidget(QWidget):
         super().__init__()
         self.layout = QtWidgets.QGridLayout()
         self.setLayout(self.layout)
-        self.text_edit = QTextEdit()
-        self.page_number_label = QLabel("Page: 1")
+        self.text_edit = CustomTextEdit()
         self.navigation_widget = NavigationWidget(self)
+        self.navigation_widget.setFixedSize(200, 50)
 
-        self.layout.addWidget(self.page_number_label, 0, 0, 1, 1)
         self.layout.addWidget(self.text_edit, 1, 0, 1, 3)
         self.layout.addWidget(self.navigation_widget, 2, 1, 1, 1)
 
@@ -36,7 +51,6 @@ class EditorWidget(QWidget):
 
     def set_current_page(self, page_num):
         self.current_page = page_num
-        self.page_number_label.setText(f"Page: {self.current_page + 1}")
         self.navigation_widget.update_page_number()
         page_content = self.file_manager.get_page_content(self.current_page)
         self.text_edit.setHtml(page_content)
