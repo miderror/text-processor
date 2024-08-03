@@ -6,8 +6,8 @@ from PySide6.QtGui import QFont, QImage, QTextImageFormat, QTextCursor, QTextCha
 from PySide6.QtWidgets import QFileDialog, QInputDialog, QMessageBox
 from bs4 import BeautifulSoup
 
-from src.custom_styles import StyleManager
-from src.editor_widget import EditorWidget
+from custom_styles import StyleManager
+from editor_widget import EditorWidget
 
 
 class Command(ABC):

@@ -2,8 +2,8 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabWidget
 
 from commands import *
-from src.editor_widget import EditorWidget
-from src.start_window import StartWindow
+from editor_widget import EditorWidget
+from start_window import StartWindow
 from tab_widgets import FileTab, MainTab, InsertTab, StylesTab, FindReplaceTab
 
 
@@ -25,23 +25,23 @@ class TextProcessor(QMainWindow):
         self.setWindowTitle('Text Processor')
         self.setWindowIcon(QIcon('../resources/logo.png'))
 
-    def create_new_file(self):
+    def create_new_file(self) -> None:
         self.stacked_widget.setCurrentWidget(self.editor_widget)
         self.adjust_size_for_editor()
 
-    def open_existing_file(self):
+    def open_existing_file(self) -> None:
         OpenFileCommand(self.editor_widget).execute()
         self.stacked_widget.setCurrentWidget(self.editor_widget)
         self.adjust_size_for_editor()
 
-    def adjust_size_for_start_window(self):
+    def adjust_size_for_start_window(self) -> None:
         self.setGeometry(100, 100, 300, 200)
 
-    def adjust_size_for_editor(self):
+    def adjust_size_for_editor(self) -> None:
         self.setGeometry(100, 100, 800, 600)
         self.init_tabs()
 
-    def init_tabs(self):
+    def init_tabs(self) -> None:
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setMaximumHeight(100)
         self.editor_widget.layout.addWidget(self.tab_widget, 0, 0, 1, 3)

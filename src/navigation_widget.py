@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QWidget, QPushButton, QLabel
 
 
 class NavigationWidget(QWidget):
-    def __init__(self, editor_widget):
+    def __init__(self, editor_widget) -> None:
         super().__init__()
         self.editor_widget = editor_widget
         self.layout = QtWidgets.QGridLayout()
@@ -29,5 +29,5 @@ class NavigationWidget(QWidget):
         self.layout.addWidget(self.page_number, 0, 1, 1, 1)
         self.layout.addWidget(self.right_button, 0, 2, 1, 1)
 
-    def update_page_number(self):
+    def update_page_number(self) -> None:
         self.page_number.setText(f'Page: {self.editor_widget.current_page + 1}')

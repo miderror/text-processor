@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog, QLabel, QLineEdit, QCheckBox, QPushButton, QVBoxLayout
 
-from src.commands import FindReplaceRegExpDocumentCommand, FindReplaceStringDocumentCommand
+from commands import FindReplaceRegExpDocumentCommand, FindReplaceStringDocumentCommand
 
 
 class FindReplaceDialog(QDialog):

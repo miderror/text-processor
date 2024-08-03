@@ -4,8 +4,8 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QToolBar, QFontComboBox, QCo
     QDialog, QColorDialog, QSizePolicy
 
 from commands import *
-from src.custom_styles import StyleManager, StyleDialog
-from src.find_replace_dialog import FindReplaceDialog
+from custom_styles import StyleManager, StyleDialog
+from find_replace_dialog import FindReplaceDialog
 
 
 def get_checkbox_stylesheet():

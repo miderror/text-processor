@@ -26,6 +26,6 @@ class StartWindow(QWidget):
         button_layout.addWidget(self.open_file_button)
         self.setLayout(button_layout)
 
-    def connect_signals(self, create_new_file_callback, open_existing_file_callback):
+    def connect_signals(self, create_new_file_callback, open_existing_file_callback) -> None:
         self.new_file_button.clicked.connect(create_new_file_callback)
         self.open_file_button.clicked.connect(open_existing_file_callback)

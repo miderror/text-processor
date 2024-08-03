@@ -5,8 +5,8 @@ from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QTextEdit, QWidget, QApplication
 
-from src.file_manager import FileManager
-from src.navigation_widget import NavigationWidget
+from file_manager import FileManager
+from navigation_widget import NavigationWidget
 
 
 class CustomTextEdit(QTextEdit):
