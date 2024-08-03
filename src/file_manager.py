@@ -1,4 +1,7 @@
+import gzip
 import json
+
+from PySide6.QtWidgets import QMessageBox, QWidget
 
 
 class FileManager:
@@ -10,14 +13,22 @@ class FileManager:
         self.file_name = None
         self.data = {"pages": [""]}
 
-    def load_file(self, file_name):
-        with open(file_name, 'r', encoding='utf-8') as file:
-            self.data = json.load(file)
+    def save_file(self, file_name):
+        compressed_data = gzip.compress(json.dumps(self.data).encode('utf-8'))
+        with open(file_name, 'wb') as file:
+            file.write(compressed_data)
         self.file_name = file_name
 
-    def save_file(self, file_name):
-        with open(file_name, 'w', encoding='utf-8') as file:
-            json.dump(self.data, file, ensure_ascii=False, indent=4)
+    def load_file(self, file_name):
+        try:
+            with gzip.open(file_name, 'rb') as file:
+                json_data = file.read()
+            self.data = json.loads(json_data)
+        except (OSError, json.JSONDecodeError):
+            QMessageBox.critical(
+                QWidget(), "Error loading file", "Failed to load file: invalid format"
+            )
+            return
         self.file_name = file_name
 
     def get_page_content(self, page_num):
