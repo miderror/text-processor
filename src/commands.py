@@ -28,7 +28,7 @@ class OpenFileCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         file_name, _ = QFileDialog.getOpenFileName(self.editor_widget, "Open File", "",
                                                    "Text Files (*.txt);;All Files (*)")
         if file_name:
@@ -39,7 +39,7 @@ class SaveFileCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         file_name, _ = QFileDialog.getSaveFileName(self.editor_widget, "Save File", "",
                                                    "Text Files (*.txt);;All Files (*)")
         if file_name:
@@ -51,7 +51,7 @@ class SetFontCommand(Command):
         self.editor_widget = editor_widget
         self.font = font
 
-    def execute(self):
+    def execute(self) -> None:
         cursor = self.editor_widget.text_edit.textCursor()
         current_format = cursor.charFormat()
         current_size = current_format.fontPointSize()
@@ -64,7 +64,7 @@ class SetFontSizeCommand(Command):
         self.editor_widget = editor_widget
         self.size = size
 
-    def execute(self):
+    def execute(self) -> None:
         self.editor_widget.text_edit.setFontPointSize(self.size)
 
 
@@ -73,7 +73,7 @@ class SetFontColorCommand(Command):
         self.editor_widget = editor_widget
         self.color = color
 
-    def execute(self):
+    def execute(self) -> None:
         self.editor_widget.text_edit.setTextColor(self.color)
 
 
@@ -82,7 +82,7 @@ class SetLineSpacingCommand(Command):
         self.editor_widget = editor_widget
         self.spacing = spacing
 
-    def execute(self):
+    def execute(self) -> None:
         cursor = self.editor_widget.text_edit.textCursor()
         block_fmt = QtGui.QTextBlockFormat()
         block_fmt.setLineHeight(float(self.spacing * 100), 1)
@@ -93,7 +93,7 @@ class ToggleBoldCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         text_edit = self.editor_widget.text_edit
         cursor = text_edit.textCursor()
 
@@ -114,7 +114,7 @@ class ToggleItalicCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         text_edit = self.editor_widget.text_edit
         cursor = text_edit.textCursor()
 
@@ -133,7 +133,7 @@ class ToggleUnderlineCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         text_edit = self.editor_widget.text_edit
         cursor = text_edit.textCursor()
 
@@ -152,7 +152,7 @@ class InsertImageCommand(Command):
     def __init__(self, editor_widget: EditorWidget):
         self.editor_widget = editor_widget
 
-    def execute(self):
+    def execute(self) -> None:
         file_dialog = QFileDialog()
         file_path, _ = file_dialog.getOpenFileName(None, "Insert Image", "",
                                                    "Images (*.png *.xpm *.jpg *.jpeg *.bmp *.gif)")
