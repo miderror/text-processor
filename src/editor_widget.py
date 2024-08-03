@@ -1,3 +1,5 @@
+import webbrowser
+
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices
@@ -15,7 +17,11 @@ class CustomTextEdit(QTextEdit):
         if event.button() == Qt.LeftButton and QApplication.keyboardModifiers() == Qt.ControlModifier:
             anchor = self.anchorAt(event.pos())
             if anchor:
-                QDesktopServices.openUrl(QUrl(anchor))
+                url = QUrl(anchor)
+                if url.isValid() and url.scheme() in ['http', 'https']:
+                    QDesktopServices.openUrl(url)
+                    return
+                webbrowser.open(f'https://www.google.com/search?q={anchor}')
                 return
         super().mousePressEvent(event)
 
@@ -47,6 +53,7 @@ class EditorWidget(QWidget):
         self.set_current_page(0)
 
     def save_file(self, file_name):
+        self.save_current_page_content()
         self.file_manager.save_file(file_name)
 
     def set_current_page(self, page_num):
@@ -58,15 +65,22 @@ class EditorWidget(QWidget):
     def get_current_page_content(self):
         return self.text_edit.toHtml()
 
-    def next_page(self):
+    def save_current_page_content(self):
         self.file_manager.set_page_content(self.current_page, self.get_current_page_content())
+
+    def update_current_page(self):
+        self.set_current_page(self.current_page)
+
+    def next_page(self):
+        self.save_current_page_content()
         self.current_page += 1
         if self.current_page >= self.file_manager.num_pages:
             self.file_manager.new_page()
-        self.set_current_page(self.current_page)
+        self.update_current_page()
 
     def previous_page(self):
-        if self.current_page > 0:
-            self.file_manager.set_page_content(self.current_page, self.get_current_page_content())
-            self.current_page -= 1
-            self.set_current_page(self.current_page)
+        if self.current_page <= 0:
+            return
+        self.save_current_page_content()
+        self.current_page -= 1
+        self.update_current_page()

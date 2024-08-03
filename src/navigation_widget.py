@@ -13,9 +13,11 @@ class NavigationWidget(QWidget):
 
         self.left_button = QPushButton()
         self.left_button.setIcon(QIcon("../resources/left_arrow.png"))
+        self.left_button.setToolTip('Previous page')
 
         self.right_button = QPushButton()
         self.right_button.setIcon(QIcon("../resources/right_arrow.png"))
+        self.right_button.setToolTip('Next page')
 
         self.page_number = QLabel('Page: 1')
         self.page_number.setAlignment(Qt.AlignCenter)

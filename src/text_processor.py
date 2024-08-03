@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabWidget
 from commands import *
 from src.editor_widget import EditorWidget
 from src.start_window import StartWindow
-from tab_widgets import FileTab, MainTab, InsertTab
+from tab_widgets import FileTab, MainTab, InsertTab, StylesTab, FindReplaceTab
 
 
 class TextProcessor(QMainWindow):
@@ -49,7 +49,11 @@ class TextProcessor(QMainWindow):
         file_tab = FileTab(self.editor_widget)
         main_tab = MainTab(self.editor_widget)
         insert_tab = InsertTab(self.editor_widget)
+        styles_tab = StylesTab(self.editor_widget)
+        replace_search_tab = FindReplaceTab(self.editor_widget)
 
         self.tab_widget.addTab(file_tab, "File")
         self.tab_widget.addTab(main_tab, "Home")
         self.tab_widget.addTab(insert_tab, "Insert")
+        self.tab_widget.addTab(styles_tab, "Styles")
+        self.tab_widget.addTab(replace_search_tab, "Find and Replace")
